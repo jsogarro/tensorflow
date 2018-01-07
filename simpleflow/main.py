@@ -30,7 +30,7 @@ class Graph(object):
         _default_graph = self
 
 
-class Operation(object):
+class Operation():
     """Represents the operations that can be performed on our data"""
     def __init__(self, input_nodes=None):
         self.input_nodes = input_nodes or []
