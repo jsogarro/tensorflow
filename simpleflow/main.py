@@ -2,6 +2,8 @@
 
 A naive implementation of TensforFlow
 """
+import numpy as np
+
 
 class Placeholder(object):
     """Represents and empty node for a value to be used to produce some output."""
@@ -74,3 +76,32 @@ class matmul(Operation):
     def compute(self, x_var, y_var):
         self.inputs = [x_var, y_var]
         return x_var.dot(y_var)
+
+
+class Session():
+    """Represents a session object"""
+    def run(self, operation, feed_dict={}):
+        nodes = traverse(operation)
+        for node in nodes:
+            if type(node) == Placeholder:
+                node.output = feed_dict[node]
+            elif type(node) == Variable:
+                node.output = node.value
+            else:
+                node.inputs = [input_node.output for input_node in node.input_nodes]
+                node.output = node.compute(*node.inputs)
+            if type(node.output) == list:
+                node.output = np.array(node.output)
+        return operation.output
+
+
+def traverse(operation):
+    """Perform a post order traversal of the nodes to ensure computations are done in the correct order."""
+    nodes = []
+    def recurse(node):
+        if isinstance(node, Operation):
+            for input_node in node.input_nodes:
+                recurse(input_node)
+        nodes.append(node)
+    recurse(operation)
+    return nodes
