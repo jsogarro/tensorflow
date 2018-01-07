@@ -66,4 +66,4 @@ class matmul(Operation):
 
     def compute(self, x_var, y_var):
         self.inputs = [x_var, y_var]
-        return x_var * y_var
+        return x_var.(y_var)
