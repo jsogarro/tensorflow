@@ -50,7 +50,7 @@ class add(Operation):
 
 
 class multiply(Operation):
-    """Represents and multiplication operation"""
+    """Represents a multiplication operation"""
     def __init__(self, x, y):
         super().__init__([x,y])
 
