@@ -23,3 +23,47 @@ class Graph(object):
     def __init__(self):
         self.operations = []
         self.placeholders = []
+
+
+class Operation(object):
+    """Represents the operations that can be performed on our data"""
+    def __init__(self, input_nodes=None):
+        self.input_nodes = input_nodes or []
+        self.output_nodes = []
+
+        # add the operatiosn to the output nodes
+        for node in input_nodes:
+            node.output_nodes.append(self)
+
+    def compute(self):
+        pass
+
+
+class add(Operation):
+    """Represents and addition operation"""
+    def __init__(self, x, y):
+        super().__init__([x,y])
+
+    def compute(self, x_var, y_var):
+        self.inputs = [x_var, y_var]
+        return x_var + y_var
+
+
+class multiply(Operation):
+    """Represents and multiplication operation"""
+    def __init__(self, x, y):
+        super().__init__([x,y])
+
+    def compute(self, x_var, y_var):
+        self.inputs = [x_var, y_var]
+        return x_var * y_var
+
+
+class matmul(Operation):
+    """Represents a matrix multiplication operation"""
+    def __init__(self, x, y):
+        super().__init__([x,y])
+
+    def compute(self, x_var, y_var):
+        self.inputs = [x_var, y_var]
+        return x_var * y_var
