@@ -23,10 +23,11 @@ class Graph(object):
     def __init__(self):
         self.operations = []
         self.placeholders = []
-        self.variabels = []
+        self.variables = []
 
     def initialize_globals(self):
-        global _default_graph = self
+        global _default_graph
+        _default_graph = self
 
 
 class Operation(object):
