@@ -15,7 +15,7 @@ class Variable(object):
     def __init__(self, initial_value=None):
         self.value = initial_value
         self.output_nodes = []
-        _default.graph.variables.append(self)
+        _default_graph.variables.append(self)
 
 
 class Graph(object):
@@ -23,6 +23,10 @@ class Graph(object):
     def __init__(self):
         self.operations = []
         self.placeholders = []
+        self.variabels = []
+
+    def initialize_globals(self):
+        global _default_graph = self
 
 
 class Operation(object):
@@ -34,6 +38,8 @@ class Operation(object):
         # add the operatiosn to the output nodes
         for node in input_nodes:
             node.output_nodes.append(self)
+
+        _default_graph.operations.append(self)
 
     def compute(self):
         pass
@@ -66,4 +72,4 @@ class matmul(Operation):
 
     def compute(self, x_var, y_var):
         self.inputs = [x_var, y_var]
-        return x_var.(y_var)
+        return x_var.dot(y_var)
