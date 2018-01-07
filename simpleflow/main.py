@@ -78,6 +78,15 @@ class matmul(Operation):
         return x_var.dot(y_var)
 
 
+class Sigmoid(Operation):
+    """Represents a sigmoid activation function"""
+    def __init__(self, z):
+        super().__init__([z])
+
+    def compute(self, z_val):
+        return 1 / (1 + np.exp(-z_val))
+
+
 class Session():
     """Represents a session object"""
     def run(self, operation, feed_dict={}):
